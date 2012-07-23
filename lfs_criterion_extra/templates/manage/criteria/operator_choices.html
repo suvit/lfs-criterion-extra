@@ -1,0 +1,5 @@
+<select class="criterion-operator" name="operator-{{id}}">
+    {% for oper, name in operator_choices %}
+      <option value="{{oper}}" {% ifequal operator oper %}selected="selected"{% endifequal %}>{{name}}</option>
+    {% endfor %}
+</select>

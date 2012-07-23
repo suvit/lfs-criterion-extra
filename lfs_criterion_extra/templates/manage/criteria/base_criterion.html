@@ -1,0 +1,8 @@
+{% extends "templates/manage/criteria/base_criterion.html" %}
+
+{% block url %}
+  <input type="hidden"
+         name="change-criterion-url"
+         id="change-criterion-url"
+         value="{% url lfs_manage_criteria_change_criterion_form %}" />
+{% endblock %}

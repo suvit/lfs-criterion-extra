@@ -1,0 +1,15 @@
+{% extends "manage/criteria/base_criterion.html" %}
+
+{% block operators %}
+  {% include "manage/criteria/valid_selection_operators.html" %}
+{% endblock %}
+
+{% block value %}
+  <select name="value-{{ id }}"
+          multiple="multiple"
+          size="5">
+      {% for discount in discounts %}
+          <option value="{{ discount.id }}" {% if discount.selected %}selected="selected"{% endif %}>{{ discount.name }}</option>
+      {% endfor %}
+  </select>
+{% endblock %}

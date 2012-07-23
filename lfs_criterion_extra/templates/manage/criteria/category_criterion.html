@@ -1,0 +1,17 @@
+{% extends "manage/criteria/base_criterion.html" %}
+
+{% block operators %}
+  {% include "manage/criteria/2selection_operators.html" %}
+{% endblock %}
+
+{% block value %}
+  <select name="value-{{ id }}"
+          multiple="multiple"
+          size="5">
+      {% for category in categories %}
+          <option value="{{ category.id }}" {% if category.selected %}selected="selected"{% endif %}>
+          	{% if category.level == 2 %}- {% endif %}{{ category.name }}
+		  </option>
+      {% endfor %}
+  </select>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% load i18n %}
+<select class="criterion-operator" name="operator-{{id}}">
+    <option value="12" {% ifequal operator 12 %}selected="selected"{% endifequal %}>{% trans 'Is valid' %}</option>
+    <option value="13" {% ifequal operator 13 %}selected="selected"{% endifequal %}>{% trans 'Is not valid' %}</option>
+</select>
