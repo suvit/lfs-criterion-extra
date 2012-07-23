@@ -13,8 +13,9 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 from lfs.catalog.models import Category, Product
-from lfs.criteria.models.criteria import Criterion, CriterionRegistrator, \
-    NumberCriterion
+#from lfs.criteria.models.criteria import Criterion, CriterionRegistrator, \
+#    NumberCriterion
+from lfs.criteria.models.criteria import Criterion as BaseCriterion
 from lfs.criteria.models.criteria_objects import CriteriaObjects
 from lfs.criteria.settings import IS, IS_NOT, IS_VALID, IS_NOT_VALID
 from lfs.cart.utils import get_cart
@@ -42,6 +43,28 @@ VALID_CHOICE_OPERATORS = (
     (IS_VALID, _(u"Is valid")),
     (IS_NOT_VALID, _(u"Is not valid")),
 )
+
+class Criterion(models.Model, BaseCriterion):
+    class Meta:
+        abstract = True
+
+class NumberCriterion(Criterion):
+    class Meta:
+        abstract = True
+
+    def test_value(self, value):
+        if self.operator == LESS_THAN and (value < self.value):
+            return True
+        if self.operator == LESS_THAN_EQUAL and (value <= self.value):
+            return True
+        if self.operator == GREATER_THAN and (value > self.value):
+            return True
+        if self.operator == GREATER_THAN_EQUAL and (value >= self.value):
+            return True
+        if self.operator == EQUAL and (value == self.value):
+            return True
+
+        return False
 
 
 class CategoryCriterion(Criterion):
