@@ -21,11 +21,6 @@ from lfs.cart.utils import get_cart
 from lfs.discounts.models import Discount
 from lfs.criteria.settings import NUMBER_OPERATORS
 from lfs.manufacturer.models import Manufacturer
-from lfs.distributor.models import DistributorPrice
-
-#from pwshop.forms import CompositionCategoryFormSet
-from pwshop.models.customer import MyOrder
-from pwshop.utils import get_ordered_categories
 
 
 IS_AUTHENTICATED = 20
@@ -99,8 +94,7 @@ class CategoryCriterion(Criterion):
 
         categories = []
         self_categories = self.categories.all()
-        for local_category in get_ordered_categories():
-            category = local_category.category
+        for category in Category.objects.all():
             if category in self_categories:
                 selected = True
             else:
@@ -347,8 +341,8 @@ class OrderSummCriterion(NumberCriterion):
         else:
             filters['session'] = request.session.session_key
 
-        order_summ = MyOrder.objects.filter(**filters)\
-                            .aggregate(sum_price=Sum('price'))['sum_price']
+        order_summ = Order.objects.filter(**filters)\
+                          .aggregate(sum_price=Sum('price'))['sum_price']
         return self.test_value(order_summ)
 
 
