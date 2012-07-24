@@ -7,15 +7,8 @@
     </td>
     <td>
       {% block types %}
-        <select class="criterion-type" name="type-{{ id }}">
-        {% for type_id, type in types %}
-            <option value="{{ type_id }}"
-                    {% if type_id == content_type %}selected="selected"{% endif %}>
-              {{type.name}}
-            </option>
-
-        {% endfor %}
-        </select>
+        {% load criterion_tags %}
+        {% types %}
       {% endblock %}
     </td>
     <td>

@@ -1,27 +1,34 @@
 # -*- coding: utf-8 -*-
+# monkeypatch lfs functions
+import monkey
+
 import datetime
-from django.db import models
-from django.db.models import Max
 from django import forms
+from django.contrib.auth.models import User, Group
+from django.contrib.contenttypes import generic
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import Max, Sum
+from django.forms.formsets import formset_factory
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
-from django.forms.formsets import formset_factory
-from django.contrib.contenttypes import generic
-from django.db.models import Sum
-from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
 
 from lfs.catalog.models import Category, Product
-#from lfs.criteria.models.criteria import Criterion, CriterionRegistrator, \
-#    NumberCriterion
-from lfs.criteria.models.criteria import Criterion as BaseCriterion
 from lfs.criteria.models.criteria_objects import CriteriaObjects
 from lfs.criteria.settings import IS, IS_NOT, IS_VALID, IS_NOT_VALID
 from lfs.cart.utils import get_cart
 from lfs.discounts.models import Discount
 from lfs.criteria.settings import NUMBER_OPERATORS
 from lfs.manufacturer.models import Manufacturer
+
+try:
+    from lfs.criteria.models.criteria import Criterion, CriterionRegistrator, \
+        NumberCriterion
+except ImportError:
+    Criterion = monkey.Criterion
+    CriterionRegistrator = monkey.CriterionRegistrator
+    NumberCriterion = monkey.NumberCriterion
 
 
 IS_AUTHENTICATED = 20
@@ -44,27 +51,85 @@ VALID_CHOICE_OPERATORS = (
     (IS_NOT_VALID, _(u"Is not valid")),
 )
 
-class Criterion(models.Model, BaseCriterion):
-    class Meta:
-        abstract = True
 
-class NumberCriterion(Criterion):
-    class Meta:
-        abstract = True
+class OrderCountCriterion(NumberCriterion):
+    """A criterion for the cart price.
+    """
+    operator = models.PositiveIntegerField(_(u"Operator"), blank=True, null=True, choices=NUMBER_OPERATORS)
+    order_count = models.IntegerField(_(u"Order Count"), default=0)
+    value_attr = 'order_count'
+    content_type = u"order_count"
+    name = _(u"Order count")
 
-    def test_value(self, value):
-        if self.operator == LESS_THAN and (value < self.value):
-            return True
-        if self.operator == LESS_THAN_EQUAL and (value <= self.value):
-            return True
-        if self.operator == GREATER_THAN and (value > self.value):
-            return True
-        if self.operator == GREATER_THAN_EQUAL and (value >= self.value):
-            return True
-        if self.operator == EQUAL and (value == self.value):
-            return True
+    def is_valid(self, request, product=None):
+        """Returns True if the criterion is valid.
 
-        return False
+        If product is given the order_count is taken from the all orders with this product and user,
+        overwise all orders from this user.
+        """
+        filters = {}
+        if product is not None:
+            filters['items__product'] = product
+        if request.user.is_authenticated():
+            filters['user'] = request.user
+        else:
+            filters['session'] = request.session.session_key
+
+        #count only closed orders
+        filters['state'] = CLOSED
+
+        order_count = Order.objects.filter(**filters).count()
+ 
+        return self.test_value(order_count)
+
+
+class GroupCriterion(Criterion):
+    """A criterion for user content objects
+    """
+    groups = models.ManyToManyField(Group)
+    value_attr = 'groups'
+    multiple_value = True
+
+    content_type = u"group"
+    name = _(u"Group")
+
+    def is_valid(self, request, product=None):
+        """Returns True if the criterion is valid.
+        """
+        user = request.user
+        if user.is_anonymous():
+             return False
+
+        user_groups = user.groups.all().values('id')
+        groups = self.groups.filter(id__in=user_groups)
+        return groups.exists()
+
+    def as_html(self, request, position):
+        """Renders the criterion as html in order to be displayed within several
+        forms.
+        """
+        users = []
+        selected_groups = self.groups.all()
+        for g in Group.objects.all():
+            if g in selected_groups:
+                selected = True
+            else:
+                selected = False
+
+            users.append({
+                "id" : g.id,
+                "name" : g.name,
+                "selected" : selected,
+            })
+
+        return render_to_string("manage/criteria/group_criterion.html", RequestContext(request, {
+            "id" : "ex%s" % self.id,
+            "operator" : self.operator,
+            "groups" : users,
+            "position" : position,
+            "content_type" : self.content_type,
+            "types" : CriterionRegistrator.types.items(),
+        }))
 
 
 class CategoryCriterion(Criterion):
@@ -73,7 +138,7 @@ class CategoryCriterion(Criterion):
     operator = models.PositiveIntegerField(_(u"Operator"),
                                            blank=True, null=True,
                                            choices=CHOICE_OPERATORS)
-    categories = models.ManyToManyField(Category, verbose_name=u"Категории")
+    categories = models.ManyToManyField(Category, verbose_name=_(u"Category"))
     value_attr = 'categories'
     multiple_value = True
 
@@ -235,10 +300,10 @@ class OrderCompositionCriterion(Criterion):
 class CompositionCategory(models.Model):
 
     criterion = models.ForeignKey(OrderCompositionCriterion,
-                                  verbose_name=u"Комплект",
+                                  verbose_name=_('Composition'),
                                   related_name="compositions")
-    category = models.ForeignKey(Category, verbose_name=u"Категория")
-    amount = models.IntegerField(verbose_name=u"Количество", default=1)
+    category = models.ForeignKey(Category, verbose_name=_('Category'))
+    amount = models.IntegerField(verbose_name=_('Amount'), default=1)
 
     def __unicode__(self):
         return u'%s-%s' % (self.category.name, self.amount)
