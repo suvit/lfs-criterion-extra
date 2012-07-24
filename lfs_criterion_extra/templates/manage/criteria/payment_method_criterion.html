@@ -10,6 +10,6 @@
           size="5">
       {% for pm in payment_methods %}
           <option value="{{ pm.id }}" {% if pm.selected %}selected="selected"{% endif %}>{{ pm.name }}</option>
-      {% endfor %}    
+      {% endfor %}
   </select>
 {% endblock %}

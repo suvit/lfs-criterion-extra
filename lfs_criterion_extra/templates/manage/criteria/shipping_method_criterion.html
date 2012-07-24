@@ -10,6 +10,6 @@
           size="5">
       {% for sm in shipping_methods %}
           <option value="{{ sm.id }}" {% if sm.selected %}selected="selected"{% endif %}>{{ sm.name }}</option>
-      {% endfor %}    
+      {% endfor %}
   </select>
 {% endblock %}

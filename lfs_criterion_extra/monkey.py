@@ -74,7 +74,9 @@ class Criterion(models.Model, BaseCriterion):
         abstract = True
 
     def __unicode__(self):
-        return u"%s: %s %s" % (self.name, self.get_operator_display(), self.value)
+        return u"%s: %s %s" % (self.name,
+                               self.get_operator_display(),
+                               self.value)
 
     def get_operator_display(self):
         return unicode(self.operator) # TODO

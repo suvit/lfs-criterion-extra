@@ -8,7 +8,7 @@
           size="5">
       {% for u in users %}
           <option value="{{ u.id }}" {% if u.selected %}selected="selected"{% endif %}>{{ u.username }}</option>
-      {% endfor %}    
+      {% endfor %}
   </select>
 {% endblock %}
 

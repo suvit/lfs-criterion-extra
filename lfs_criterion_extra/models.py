@@ -56,7 +56,7 @@ class OrderCountCriterion(NumberCriterion):
     """A criterion for the cart price.
     """
     operator = models.PositiveIntegerField(_(u"Operator"), blank=True, null=True, choices=NUMBER_OPERATORS)
-    order_count = models.IntegerField(_(u"Order Count"), default=0)
+    order_count = models.IntegerField(_(u"Order сount"), default=0)
     value_attr = 'order_count'
     content_type = u"order_count"
     name = _(u"Order count")
