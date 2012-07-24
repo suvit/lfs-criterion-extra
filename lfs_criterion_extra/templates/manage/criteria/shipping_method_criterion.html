@@ -1,0 +1,15 @@
+{% extends "manage/criteria/base_criterion.html" %}
+
+{% block operators %}
+  {% include "manage/criteria/selection_operators.html" %}
+{% endblock %}
+
+{% block value %}
+  <select name="value-{{ id }}"
+          multiple="multiple"
+          size="5">
+      {% for sm in shipping_methods %}
+          <option value="{{ sm.id }}" {% if sm.selected %}selected="selected"{% endif %}>{{ sm.name }}</option>
+      {% endfor %}    
+  </select>
+{% endblock %}

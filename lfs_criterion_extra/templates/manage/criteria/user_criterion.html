@@ -1,0 +1,14 @@
+{% extends "manage/criteria/base_criterion.html" %}
+
+{% block operators %}{% endblock %}
+
+{% block value %}
+  <select name="value-{{ id }}"
+          multiple="multiple"
+          size="5">
+      {% for u in users %}
+          <option value="{{ u.id }}" {% if u.selected %}selected="selected"{% endif %}>{{ u.username }}</option>
+      {% endfor %}    
+  </select>
+{% endblock %}
+

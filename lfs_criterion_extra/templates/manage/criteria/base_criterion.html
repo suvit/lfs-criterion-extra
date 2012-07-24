@@ -1,8 +1,48 @@
-{% extends "templates/manage/criteria/base_criterion.html" %}
+{% load i18n %}
 
-{% block url %}
-  <input type="hidden"
-         name="change-criterion-url"
-         id="change-criterion-url"
-         value="{% url lfs_manage_criteria_change_criterion_form %}" />
-{% endblock %}
+<tr class="criterion" id="criterion-{{ id }}">
+    <td>
+        {% block url %}{% endblock %}
+        <input type="text" size="2" class="position" name="position-{{ id }}" value="{{ position }}" />
+    </td>
+    <td>
+      {% block types %}
+        <select class="criterion-type" name="type-{{ id }}">
+        {% for type_id, type in types %}
+            <option value="{{ type_id }}"
+                    {% if type_id == content_type %}selected="selected"{% endif %}>
+              {{type.name}}
+            </option>
+
+        {% endfor %}
+        </select>
+      {% endblock %}
+    </td>
+    <td>
+      {% block operators %}
+        {% include "manage/criteria/number_operators.html" %}
+      {% endblock %}
+    </td>
+    <td>
+      {% block value %}
+        <input class="criterion-value"
+               type="text"
+               id="text-{{id}}"
+               name="value-{{ id }}"
+               value="{{ value }}"/>
+      {% endblock %}
+    </td>
+    <td>
+      {% block buttons %}
+        <a class="criterion-add-button"
+           href="{% url lfs_add_criterion %}">
+            <img src="{{ STATIC_URL }}icons/add.png"
+                 alt="Add" />
+        </a>
+        <a class="criterion-delete-button">
+            <img src="{{ STATIC_URL }}icons/delete.png"
+                 alt="Delete" />
+        </a>
+      {% endblock %}
+    </td>
+</tr>
