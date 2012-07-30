@@ -15,12 +15,20 @@ from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 
 from lfs.catalog.models import Category, Product
-from lfs.criteria.models.criteria_objects import CriteriaObjects
-from lfs.criteria.settings import IS, IS_NOT, IS_VALID, IS_NOT_VALID
 from lfs.cart.utils import get_cart
-from lfs.discounts.models import Discount
+from lfs.criteria.models.criteria_objects import CriteriaObjects
+from lfs.criteria.settings import EQUAL
+from lfs.criteria.settings import LESS_THAN
+from lfs.criteria.settings import LESS_THAN_EQUAL
+from lfs.criteria.settings import GREATER_THAN
+from lfs.criteria.settings import GREATER_THAN_EQUAL
 from lfs.criteria.settings import NUMBER_OPERATORS
+from lfs.criteria.settings import SELECT_OPERATORS
+from lfs.criteria.settings import IS, IS_NOT, IS_VALID, IS_NOT_VALID
+from lfs.discounts.models import Discount
 from lfs.manufacturer.models import Manufacturer
+from lfs.order.models import Order
+from lfs.order.settings import CLOSED
 
 try:
     from lfs.criteria.models.criteria import Criterion, CriterionRegistrator, \

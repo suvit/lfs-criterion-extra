@@ -23,6 +23,11 @@ from lfs.criteria.models.criteria import ShippingMethodCriterion
 from lfs.criteria.models.criteria import UserCriterion
 from lfs.criteria.models.criteria import WidthCriterion
 from lfs.criteria.models.criteria import WeightCriterion
+from lfs.criteria.settings import EQUAL
+from lfs.criteria.settings import LESS_THAN
+from lfs.criteria.settings import LESS_THAN_EQUAL
+from lfs.criteria.settings import GREATER_THAN
+from lfs.criteria.settings import GREATER_THAN_EQUAL
 
 #imports for patching
 import lfs.criteria.utils
