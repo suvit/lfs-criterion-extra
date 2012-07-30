@@ -27,6 +27,8 @@ from lfs.criteria.models.criteria import WeightCriterion
 #imports for patching
 import lfs.criteria.utils
 import lfs.manage.views.criteria
+from lfs.criteria.settings import LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN,\
+    GREATER_THAN_EQUAL, EQUAL
 
 
 # patching models
