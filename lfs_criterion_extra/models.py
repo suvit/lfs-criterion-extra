@@ -207,6 +207,70 @@ class CategoryCriterion(Criterion):
         }))
 
 
+class ProductCriterion(Criterion):
+    """A criterion for the shipping category.
+    """
+    operator = models.PositiveIntegerField(_(u"Operator"),
+                                           blank=True, null=True,
+                                           choices=CHOICE_OPERATORS)
+    products = models.ManyToManyField(Product, verbose_name=_(u"Product"))
+    value_attr = 'products'
+    multiple_value = True
+
+    def __unicode__(self):
+        values = []
+        for value in self.value.all():
+            values.append(value.name)
+
+        return u"%s %s %s" % (self.name,
+                              self.get_operator_display(),
+                              u", ".join(values))
+
+    content_type = u"product"
+    name = _(u"Product")
+
+    def is_valid(self, request, product=None):
+        """Returns True if the criterion is valid.
+        """
+        if product:
+            result = product in self.products.all()
+        else:
+            cart = get_cart(request)
+            if cart is None or not cart.items().exists():
+                return False
+
+            products = (item.product for item in cart.items() if item.product)
+
+            result = bool(products.intersection(self.products.all()))
+
+        if self.operator == IS:
+            return result
+        else:
+            return not result
+
+    def as_html(self, request, position):
+        """Renders the criterion as html in order
+        to be displayed within several forms.
+        """
+
+        products = Product.objects.all()
+        self_products = self.products.all()
+
+        for product in products:
+            product.selected = product in self_products
+
+        return render_to_string("manage/criteria/product_criterion.html",
+          RequestContext(request, {
+            "id": "ex%s" % self.id,
+            "operator": self.operator,
+            "value": self.value,
+            "position": position,
+            "products": products,
+            "content_type": self.content_type,
+            "types": CriterionRegistrator.types.items(),
+        }))
+
+
 class OrderCompositionCriterion(Criterion):
     """A criterion for the shipping category.
     """

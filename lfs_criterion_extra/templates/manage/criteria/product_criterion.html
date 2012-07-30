@@ -1,0 +1,17 @@
+{% extends "manage/criteria/base_criterion.html" %}
+
+{% block operators %}
+  {% include "manage/criteria/2selection_operators.html" %}
+{% endblock %}
+
+{% block value %}
+  <select name="value-{{ id }}"
+          multiple="multiple"
+          size="5">
+    {% for product in products %}
+      <option value="{{ product.id }}" {% if product.selected %}selected="selected"{% endif %}>
+        {{ product.name }}
+      </option>
+    {% endfor %}
+  </select>
+{% endblock %}
