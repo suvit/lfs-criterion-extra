@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-24 20:12+0500\n"
+"POT-Creation-Date: 2012-07-30 14:27+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Victor Safronovich <vsafronovich@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,11 +44,16 @@ msgstr "Действующий"
 msgid "Is not valid"
 msgstr "Не действующий"
 
-#: .\models.py:58 .\models.py:138 .\models.py:213 .\models.py:326
-#: .\models.py:412 .\models.py:440 .\models.py:515 .\models.py:554
-#: .\models.py:574 .\models.py:599 .\models.py:632 .\models.py:696
+#: .\models.py:58 .\models.py:138 .\models.py:213 .\models.py:277
+#: .\models.py:390 .\models.py:476 .\models.py:504 .\models.py:579
+#: .\models.py:618 .\models.py:638 .\models.py:663 .\models.py:696
+#: .\models.py:760
 msgid "Operator"
 msgstr "Оператор"
+
+#: .\models.py:59
+msgid "Order сount"
+msgstr "Количество заказов"
 
 #: .\models.py:62
 msgid "Order count"
@@ -58,55 +63,59 @@ msgstr "Количество заказов"
 msgid "Group"
 msgstr "Группа"
 
-#: .\models.py:141 .\models.py:155 .\models.py:219 .\models.py:305
+#: .\models.py:141 .\models.py:155 .\models.py:283 .\models.py:369
 msgid "Category"
 msgstr "Категория"
 
-#: .\models.py:236 .\models.py:303
+#: .\models.py:216 .\models.py:230
+msgid "Product"
+msgstr "Продукт"
+
+#: .\models.py:300 .\models.py:367
 msgid "Composition"
 msgstr "Состав"
 
-#: .\models.py:306
+#: .\models.py:370
 msgid "Amount"
 msgstr "Количество"
 
-#: .\models.py:329 .\models.py:346
+#: .\models.py:393 .\models.py:410
 msgid "Discount"
 msgstr "Скидка"
 
-#: .\models.py:415 .\models.py:418
+#: .\models.py:479 .\models.py:482
 msgid "Order summ"
 msgstr "Сумма заказов"
 
-#: .\models.py:444 .\models.py:459
+#: .\models.py:508 .\models.py:523
 msgid "Manufacturer"
 msgstr "Производитель"
 
-#: .\models.py:518 .\models.py:521
+#: .\models.py:582 .\models.py:585
 msgid "Time"
 msgstr "Время"
 
-#: .\models.py:557
+#: .\models.py:621
 msgid "Сart amount"
 msgstr "Размер корзины"
 
-#: .\models.py:560
+#: .\models.py:624
 msgid "Cart amount"
 msgstr "Размер корзины"
 
-#: .\models.py:577 .\models.py:580
+#: .\models.py:641 .\models.py:644
 msgid "Max weight"
 msgstr "Максимальный вес"
 
-#: .\models.py:602 .\models.py:605
+#: .\models.py:666 .\models.py:669
 msgid "For sale"
 msgstr "Распродажа"
 
-#: .\models.py:640
+#: .\models.py:704
 msgid "User (advanced)"
 msgstr "Пользователь (расширенный)"
 
-#: .\models.py:699 .\models.py:702
+#: .\models.py:763 .\models.py:766
 msgid "Profit"
 msgstr "Прибыль"
 
