@@ -87,7 +87,7 @@ class OrderCountCriterion(NumberCriterion):
         filters['state'] = CLOSED
 
         order_count = Order.objects.filter(**filters).count()
- 
+
         return self.test_value(order_count)
 
 
@@ -592,8 +592,9 @@ class TimeCriterion(NumberCriterion):
     content_type = u"time"
     name = _(u"Time")
 
-    class Meta:
-        app_label = 'pwshop'
+    @property
+    def value(self):
+        return self.time
 
     @classmethod
     def create(self, operator, value, request=None):
