@@ -592,10 +592,6 @@ class TimeCriterion(NumberCriterion):
     content_type = u"time"
     name = _(u"Time")
 
-    @property
-    def value(self):
-        return self.time
-
     @classmethod
     def create(self, operator, value, request=None):
 
