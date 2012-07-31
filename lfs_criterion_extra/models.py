@@ -247,7 +247,8 @@ class ProductCriterion(Criterion):
             if cart is None or not cart.items().exists():
                 return False
 
-            products = (item.product for item in cart.items() if item.product)
+            products = set(item.product for item in cart.items()
+                           if item.product)
 
             result = bool(products.intersection(self.products.all()))
 
