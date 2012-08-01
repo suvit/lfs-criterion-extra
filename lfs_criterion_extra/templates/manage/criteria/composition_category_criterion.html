@@ -1,4 +1,5 @@
 {% extends "manage/criteria/base_criterion.html" %}
+{% load i18n %}
 
 {% block operators %}
   {% include "manage/criteria/2selection_operators.html" %}
@@ -8,9 +9,13 @@
   <input type="hidden" name="create_compositions" value="1"/>
   <table>
   {{formset.management_form}}
-  <tr><th>Категория</th><th>Кол-во товара</th><th>Удалить</th></tr>
+  <tr><th>{% trans 'Category' %}</th>
+      <th>{% trans 'Amount' %}</th>
+      <th>{% trans 'Delete' %}</th></tr>
   {% for form in formset.forms %}
-    <tr><td>{{form.id}}{{form.category}}</td><td>{{form.amount}}</td><td>{{form.DELETE}}</td></tr>
+    <tr><td>{{form.id}}{{form.category}}</td>
+        <td>{{form.amount}}</td>
+        <td>{{form.DELETE}}</td></tr>
   {% endfor %}
   </table>
 {% endblock %}

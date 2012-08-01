@@ -18,11 +18,15 @@
     </td>
     <td>
       {% block value %}
-        <input class="criterion-value"
-               type="text"
-               id="text-{{id}}"
-               name="value-{{ id }}"
-               value="{{ value }}"/>
+        {% if widget_value %}
+          {{ widget_value }}
+        {% else %}
+          <input class="criterion-value"
+                 type="text"
+                 id="text-{{id}}"
+                 name="value-{{ id }}"
+                 value="{{ value }}"/>
+        {% endif %}
       {% endblock %}
     </td>
     <td>

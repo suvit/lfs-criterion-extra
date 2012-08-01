@@ -2,6 +2,7 @@
 # monkeypatch lfs functions
 import monkey
 
+import time
 import datetime
 from django import forms
 from django.contrib.auth.models import User, Group
@@ -592,26 +593,15 @@ class TimeCriterion(NumberCriterion):
     value_attr = 'time'
     content_type = u"time"
     name = _(u"Time")
+    widget = forms.TimeInput
 
     @classmethod
     def create(self, operator, value, request=None):
 
-        t = None
-        for v in [':', '-', '.', ' ']:
-            if v in value:
-                try:
-                    t = datetime.datetime.strptime(value,
-                                                   u"%H" + v + "%M").time()
-                except:  # XXX write exception name
-                    pass
-                else:
-                    break
-        if t is None:
-            raise ValidationError(u"Введите время в правильном формате:"\
-                                  u" '12:30'")
+        value = forms.TimeField().to_python(value)
 
         c = self.objects.create(operator=operator)
-        c.value = t
+        c.value = value
         c.save()
         return c
 
