@@ -100,6 +100,7 @@ class Criterion(models.Model, BaseCriterion):
     operator = None
     name = None
     content_type = None
+    widget = TextInput
 
     def as_html(self, request, position):
         """Renders the criterion as html in order to displayed it within several

@@ -674,10 +674,39 @@ class ForSaleCriterion(Criterion):
             if cart is None or not cart.items().exists():
                 return False
 
-            result = False
-            for item in cart.items():
-                if item.product.get_for_sale():
-                    result = True
+            result = any(item.product.get_for_sale()
+                         for item in cart.items())
+
+        if self.operator == IS:
+            return result
+        else:
+            return not result
+
+
+class ManualDeliveryTimeCriterion(Criterion):
+
+    operator = models.PositiveIntegerField(_(u"Operator"),
+                                           blank=True, null=True,
+                                           choices=CHOICE_OPERATORS)
+    manual_delivery_time = models.BooleanField(
+                               verbose_name=_(u"Manual delivery time"),
+                               default=True)
+    value_attr = 'manual_delivery_time'
+    content_type = 'manual_delivery_time'
+    name = _(u"Manual delivery time")
+
+    def is_valid(self, request, product=None):
+        """Returns True if the criterion is valid.
+        """
+        if product:
+            result = product.manual_delivery_time
+        else:
+            cart = get_cart(request)
+            if cart is None or not cart.items().exists():
+                return False
+
+            result = any(item.product.manual_delivery_time
+                         for item in cart.items())
 
         if self.operator == IS:
             return result
