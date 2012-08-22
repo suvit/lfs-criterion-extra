@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 14:27+0500\n"
+"POT-Creation-Date: 2012-08-01 17:36+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Victor Safronovich <vsafronovich@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,104 +18,106 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: .\models.py:38 .\models.py:45
+#: .\models.py:47 .\models.py:54
 msgid "Is"
 msgstr "Является"
 
-#: .\models.py:39 .\models.py:46
+#: .\models.py:48 .\models.py:55
 msgid "Is not"
 msgstr "Не является"
 
-#: .\models.py:40 .\templates\manage\criteria\full_user_operators.html.py:5
+#: .\models.py:49 .\templates\manage\criteria\full_user_operators.html.py:5
 msgid "Authenticated"
 msgstr "Авторизован"
 
-#: .\models.py:41 .\templates\manage\criteria\full_user_operators.html.py:6
+#: .\models.py:50 .\templates\manage\criteria\full_user_operators.html.py:6
 msgid "Anonymous"
 msgstr "Аноним"
 
-#: .\models.py:50
+#: .\models.py:59
 #: .\templates\manage\criteria\valid_selection_operators.html.py:3
 msgid "Is valid"
 msgstr "Действующий"
 
-#: .\models.py:51
+#: .\models.py:60
 #: .\templates\manage\criteria\valid_selection_operators.html.py:4
 msgid "Is not valid"
 msgstr "Не действующий"
 
-#: .\models.py:58 .\models.py:138 .\models.py:213 .\models.py:277
-#: .\models.py:390 .\models.py:476 .\models.py:504 .\models.py:579
-#: .\models.py:618 .\models.py:638 .\models.py:663 .\models.py:696
-#: .\models.py:760
+#: .\models.py:67 .\models.py:147 .\models.py:222 .\models.py:287
+#: .\models.py:400 .\models.py:486 .\models.py:514 .\models.py:589
+#: .\models.py:614 .\models.py:634 .\models.py:659 .\models.py:692
+#: .\models.py:756
 msgid "Operator"
 msgstr "Оператор"
 
-#: .\models.py:59
+#: .\models.py:68
 msgid "Order сount"
 msgstr "Количество заказов"
 
-#: .\models.py:62
+#: .\models.py:71
 msgid "Order count"
 msgstr "Количество заказов"
 
-#: .\models.py:94
+#: .\models.py:103
 msgid "Group"
 msgstr "Группа"
 
-#: .\models.py:141 .\models.py:155 .\models.py:283 .\models.py:369
+#: .\models.py:150 .\models.py:164 .\models.py:293 .\models.py:379
+#: .\templates\manage\criteria\composition_category_criterion.html.py:12
 msgid "Category"
 msgstr "Категория"
 
-#: .\models.py:216 .\models.py:230
+#: .\models.py:225 .\models.py:239
 msgid "Product"
 msgstr "Продукт"
 
-#: .\models.py:300 .\models.py:367
+#: .\models.py:310 .\models.py:377
 msgid "Composition"
 msgstr "Состав"
 
-#: .\models.py:370
+#: .\models.py:380
+#: .\templates\manage\criteria\composition_category_criterion.html.py:13
 msgid "Amount"
 msgstr "Количество"
 
-#: .\models.py:393 .\models.py:410
+#: .\models.py:403 .\models.py:420
 msgid "Discount"
 msgstr "Скидка"
 
-#: .\models.py:479 .\models.py:482
+#: .\models.py:489 .\models.py:492
 msgid "Order summ"
 msgstr "Сумма заказов"
 
-#: .\models.py:508 .\models.py:523
+#: .\models.py:518 .\models.py:533
 msgid "Manufacturer"
 msgstr "Производитель"
 
-#: .\models.py:582 .\models.py:585
+#: .\models.py:592 .\models.py:595
 msgid "Time"
 msgstr "Время"
 
-#: .\models.py:621
+#: .\models.py:617
 msgid "Сart amount"
 msgstr "Размер корзины"
 
-#: .\models.py:624
+#: .\models.py:620
 msgid "Cart amount"
 msgstr "Размер корзины"
 
-#: .\models.py:641 .\models.py:644
+#: .\models.py:637 .\models.py:640
 msgid "Max weight"
 msgstr "Максимальный вес"
 
-#: .\models.py:666 .\models.py:669
+#: .\models.py:662 .\models.py:665
 msgid "For sale"
 msgstr "Распродажа"
 
-#: .\models.py:704
+#: .\models.py:700
 msgid "User (advanced)"
 msgstr "Пользователь (расширенный)"
 
-#: .\models.py:763 .\models.py:766
+#: .\models.py:759 .\models.py:762
 msgid "Profit"
 msgstr "Прибыль"
 
@@ -128,3 +130,7 @@ msgstr "Выбран"
 #: .\templates\manage\criteria\full_user_operators.html.py:4
 msgid "Is not selected"
 msgstr "Не выбран"
+
+#: .\templates\manage\criteria\composition_category_criterion.html.py:14
+msgid "Delete"
+msgstr "Удалить"

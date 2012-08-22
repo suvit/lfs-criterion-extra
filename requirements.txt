@@ -1,1 +1,1 @@
-django-lfs>=0.7
+django-lfs>=0.7,<0.8

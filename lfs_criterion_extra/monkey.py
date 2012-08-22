@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import permission_required
 from django.db import models
 from django.db.models.base import ModelBase
 from django.http import HttpResponse
+from django.forms import TextInput
 from django.template import RequestContext
 from django.template.loader import render_to_string
 
@@ -99,6 +100,7 @@ class Criterion(models.Model, BaseCriterion):
     operator = None
     name = None
     content_type = None
+    widget = TextInput
 
     def as_html(self, request, position):
         """Renders the criterion as html in order to displayed it within several
@@ -106,10 +108,22 @@ class Criterion(models.Model, BaseCriterion):
         """
         template = "manage/criteria/%s_criterion.html" % self.content_type
 
+        widget = getattr(self, 'widget', TextInput)
+        if isinstance(widget, type):
+            widget = widget()
+
+        if self.id is None:
+           cid = "ex%s" % datetime.now().strftime("%s")
+        else:
+           cid = "ex%s" % self.id
+
         return render_to_string(template, RequestContext(request, {
-            "id" : "ex%s" % self.id,
+            "id" : cid,
             "operator" : self.operator,
-            "value" : self.value,
+            "widget_value" : widget.render(name='value-%s' % cid,
+                                           value=self.value,
+                                           attrs={'class': "criterion-value",
+                                                  'id': 'text-%s' % cid}),
             "position" : position,
             "content_type" : self.content_type,
             "types" : CriterionRegistrator.types.items(),

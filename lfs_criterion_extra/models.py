@@ -2,6 +2,7 @@
 # monkeypatch lfs functions
 import monkey
 
+import time
 import datetime
 from django import forms
 from django.contrib.auth.models import User, Group
@@ -247,7 +248,8 @@ class ProductCriterion(Criterion):
             if cart is None or not cart.items().exists():
                 return False
 
-            products = (item.product for item in cart.items() if item.product)
+            products = set(item.product for item in cart.items()
+                           if item.product)
 
             result = bool(products.intersection(self.products.all()))
 
@@ -591,26 +593,15 @@ class TimeCriterion(NumberCriterion):
     value_attr = 'time'
     content_type = u"time"
     name = _(u"Time")
+    widget = forms.TimeInput
 
     @classmethod
     def create(self, operator, value, request=None):
 
-        t = None
-        for v in [':', '-', '.', ' ']:
-            if v in value:
-                try:
-                    t = datetime.datetime.strptime(value,
-                                                   u"%H" + v + "%M").time()
-                except:  # XXX write exception name
-                    pass
-                else:
-                    break
-        if t is None:
-            raise ValidationError(u"Введите время в правильном формате:"\
-                                  u" '12:30'")
+        value = forms.TimeField().to_python(value)
 
         c = self.objects.create(operator=operator)
-        c.value = t
+        c.value = value
         c.save()
         return c
 
@@ -683,10 +674,39 @@ class ForSaleCriterion(Criterion):
             if cart is None or not cart.items().exists():
                 return False
 
-            result = False
-            for item in cart.items():
-                if item.product.get_for_sale():
-                    result = True
+            result = any(item.product.get_for_sale()
+                         for item in cart.items())
+
+        if self.operator == IS:
+            return result
+        else:
+            return not result
+
+
+class ManualDeliveryTimeCriterion(Criterion):
+
+    operator = models.PositiveIntegerField(_(u"Operator"),
+                                           blank=True, null=True,
+                                           choices=CHOICE_OPERATORS)
+    manual_delivery_time = models.BooleanField(
+                               verbose_name=_(u"Manual delivery time"),
+                               default=True)
+    value_attr = 'manual_delivery_time'
+    content_type = 'manual_delivery_time'
+    name = _(u"Manual delivery time")
+
+    def is_valid(self, request, product=None):
+        """Returns True if the criterion is valid.
+        """
+        if product:
+            result = product.manual_delivery_time
+        else:
+            cart = get_cart(request)
+            if cart is None or not cart.items().exists():
+                return False
+
+            result = any(item.product.manual_delivery_time
+                         for item in cart.items())
 
         if self.operator == IS:
             return result
