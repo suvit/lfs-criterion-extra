@@ -14,7 +14,7 @@ setup(
     name='lfs_criterion_extra',
     version=VERSION,
 
-    description='Extra critetions for LFS',
+    description='Extra criterions for LFS',
     long_description=file(
         os.path.join(
             os.path.dirname(__file__),
