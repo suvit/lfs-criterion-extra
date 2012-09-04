@@ -737,9 +737,9 @@ class FullUserCriterion(Criterion):
             return user.is_authenticated()
         elif operator == IS_ANONYMOUS:
             return user.is_anonymous()
-
-        result = user in self.users.all()
-        return operator == IS and result or not result
+        else:
+            result = user in self.users.all()
+            return result if operator == IS else not result
 
     def as_html(self, request, position):
         """Renders the criterion as html in order to be displayed
@@ -748,15 +748,12 @@ class FullUserCriterion(Criterion):
         users = []
         selected_users = self.users.all()
         # TODO check permission manage shop
-        for u in User.objects.filter(is_active=True):
-            if u in selected_users:
-                selected = True
-            else:
-                selected = False
+        for user in User.objects.filter(is_active=True):
+            selected = user in selected_users
 
             users.append({
-                "id": u.id,
-                "username": u.username,
+                "id": user.id,
+                "username": user.username,
                 "selected": selected,
             })
 
