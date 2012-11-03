@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.forms import TextInput
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
 
 #lfs imports
 from lfs.criteria.models import CriteriaObjects
