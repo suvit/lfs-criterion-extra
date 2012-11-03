@@ -67,9 +67,9 @@ of delivery and payment methods.
 Added own criterions
 ------------------------------
 
-You may inherit **Critetion** or **NumberCriterion**
+You may inherit **Criterion** or **NumberCriterion**
 
-    from lfs_criterion_extra.models import NumberCriterion
+    from lfs_criterion_extra.models import Criterion, NumberCriterion
 
     class FooCriterion(NumberCriterion):
         foo = models.DecimalField('FOO')

@@ -75,6 +75,7 @@ CriterionRegistrator.register(ShippingMethodCriterion)
 ShippingMethodCriterion.multiple_value = True
 CriterionRegistrator.register(UserCriterion)
 UserCriterion.multiple_value = True
+UserCriterion.operator = None  # XXX error in django lfs 0.7
 CriterionRegistrator.register(WidthCriterion)
 CriterionRegistrator.register(WeightCriterion)
 #print CriterionRegistrator.types

@@ -136,7 +136,7 @@ class GroupCriterion(Criterion):
             "groups" : users,
             "position" : position,
             "content_type" : self.content_type,
-            "types" : CriterionRegistrator.types.items(),
+            "types" : CriterionRegistrator.items(),
         }))
 
 
@@ -211,7 +211,7 @@ class CategoryCriterion(Criterion):
             "position": position,
             "categories": categories,
             "content_type": self.content_type,
-            "types": CriterionRegistrator.types.items(),
+            "types": CriterionRegistrator.items(),
         }))
 
 
@@ -276,7 +276,7 @@ class ProductCriterion(Criterion):
             "position": position,
             "products": products,
             "content_type": self.content_type,
-            "types": CriterionRegistrator.types.items(),
+            "types": CriterionRegistrator.items(),
         }))
 
 
@@ -350,7 +350,7 @@ class OrderCompositionCriterion(Criterion):
             "compositions": compositions,
             "formset": formset,
             "content_type": self.content_type,
-            "types": CriterionRegistrator.types.items(),
+            "types": CriterionRegistrator.items(),
         }))
 
     @classmethod
@@ -476,7 +476,7 @@ class DiscountCriterion(Criterion):
             "position": position,
             "discounts": discounts,
             "content_type": self.content_type,
-            "types": CriterionRegistrator.types.items(),
+            "types": CriterionRegistrator.items(),
         }))
 
 
@@ -576,7 +576,7 @@ class ManufacturerCriterion(Criterion):
             "position": position,
             "manufacturers": manufacturers,
             "content_type": self.content_type,
-            "types": CriterionRegistrator.types.items(),
+            "types": CriterionRegistrator.items(),
         }))
 
 
@@ -751,7 +751,7 @@ class FullUserCriterion(Criterion):
             "users": users,
             "position": position,
             "content_type": self.content_type,
-            "types": CriterionRegistrator.types.items(),
+            "types": CriterionRegistrator.items(),
         }))
 
     @classmethod
