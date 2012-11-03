@@ -12,7 +12,7 @@ register = Library()
 def types(context):
     types = context.get('types')
     if types is None:
-        context['types'] = CriterionRegistrator.types.items()
+        context['types'] = CriterionRegistrator.items()
     content_type = context.get('content_type')
     if types is None:
         id = context['id']

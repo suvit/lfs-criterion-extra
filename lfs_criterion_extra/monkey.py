@@ -3,7 +3,6 @@ from datetime import datetime
 
 # django imports
 from django.contrib.auth.decorators import permission_required
-from django.utils.datastructures import SortedDict
 from django.db import models
 from django.db.models.base import ModelBase
 from django.http import HttpResponse
@@ -41,7 +40,7 @@ import lfs.manage.views.criteria
 # patching models
 class CriterionRegistrator(ModelBase):
 
-    types = SortedDict()
+    types = dict()
 
     def __new__(cls, name, bases, attrs):
         abstract = getattr(attrs.get('Meta'), 'abstract', False)
@@ -56,7 +55,12 @@ class CriterionRegistrator(ModelBase):
         if new_class.content_type is None:
             logger.error('registering None criterion type %s' % new_class)
         cls.types[new_class().content_type] = new_class
-        cls.types.keyOrder.sort()
+
+    @classmethod
+    def items(cls):
+        return [{'id': item().content_type,
+                 'name': item().name} for item in cls.types.values()]
+
 
 CriterionRegistrator.register(CountryCriterion)
 CountryCriterion.multiple_value = True
@@ -130,7 +134,7 @@ class Criterion(models.Model, BaseCriterion):
                                                   'id': 'text-%s' % cid}),
             "position" : position,
             "content_type" : self.content_type,
-            "types" : CriterionRegistrator.types.items(),
+            "types" : CriterionRegistrator.items(),
         }))
 
     def is_valid(self, request, product=None):

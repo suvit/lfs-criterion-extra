@@ -89,6 +89,5 @@ that`s all, your criterion is appeared in the criterion list.
 TODO
 ------
 
-* list criterions in sorted order
-* move monkey.py to lfs.core (merge or move to lfs 0.8)
+* move monkey.py to lfs.criterion.core (merge or move to lfs 0.8)
 * write tests
