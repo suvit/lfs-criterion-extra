@@ -23,7 +23,6 @@ from lfs.criteria.settings import LESS_THAN
 from lfs.criteria.settings import LESS_THAN_EQUAL
 from lfs.criteria.settings import GREATER_THAN
 from lfs.criteria.settings import GREATER_THAN_EQUAL
-from lfs.criteria.settings import NUMBER_OPERATORS
 from lfs.criteria.settings import SELECT_OPERATORS
 from lfs.criteria.settings import IS, IS_NOT, IS_VALID, IS_NOT_VALID
 from lfs.discounts.models import Discount
@@ -32,8 +31,9 @@ from lfs.order.models import Order
 from lfs.order.settings import CLOSED
 
 try:
-    from lfs.criteria.models.criteria import Criterion, CriterionRegistrator, \
-        NumberCriterion
+    from lfs.criteria.models.criteria import (Criterion,
+                                              CriterionRegistrator,
+                                              NumberCriterion)
 except ImportError:
     Criterion = monkey.Criterion
     CriterionRegistrator = monkey.CriterionRegistrator
@@ -64,7 +64,6 @@ VALID_CHOICE_OPERATORS = (
 class OrderCountCriterion(NumberCriterion):
     """A criterion for the cart price.
     """
-    operator = models.PositiveIntegerField(_(u"Operator"), blank=True, null=True, choices=NUMBER_OPERATORS)
     order_count = models.IntegerField(_(u"Order сount"), default=0)
     value_attr = 'order_count'
     content_type = u"order_count"
@@ -483,9 +482,6 @@ class DiscountCriterion(Criterion):
 
 class OrderSummCriterion(NumberCriterion):
 
-    operator = models.PositiveIntegerField(_(u"Operator"),
-                                           blank=True, null=True,
-                                           choices=NUMBER_OPERATORS)
     order_summ = models.IntegerField(_(u"Order summ"), default=0)
     value_attr = 'order_summ'
     content_type = u"order_summ"
@@ -586,9 +582,6 @@ class ManufacturerCriterion(Criterion):
 
 class TimeCriterion(NumberCriterion):
 
-    operator = models.PositiveIntegerField(_(u"Operator"),
-                                           blank=True, null=True,
-                                           choices=NUMBER_OPERATORS)
     time = models.TimeField(_(u"Time"), default=datetime.time(0, 0))
     value_attr = 'time'
     content_type = u"time"
@@ -611,9 +604,6 @@ class TimeCriterion(NumberCriterion):
 
 class CartAmountCriterion(NumberCriterion):
 
-    operator = models.PositiveIntegerField(_(u"Operator"),
-                                           blank=True, null=True,
-                                           choices=NUMBER_OPERATORS)
     amount = models.IntegerField(_(u"Сart amount"), default=0)
     value_attr = u'amount'
     content_type = u"amount"
@@ -631,9 +621,6 @@ class CartAmountCriterion(NumberCriterion):
 
 class MaxWeightCriterion(NumberCriterion):
 
-    operator = models.PositiveIntegerField(_(u"Operator"),
-                                           blank=True, null=True,
-                                           choices=NUMBER_OPERATORS)
     max_weight = models.IntegerField(_(u"Max weight"), default=0.)
     value_attr = u'max_weight'
     content_type = u"max_weight"
@@ -779,9 +766,6 @@ class FullUserCriterion(Criterion):
 
 class ProfitCriterion(NumberCriterion):
 
-    operator = models.PositiveIntegerField(_(u"Operator"),
-                                           blank=True, null=True,
-                                           choices=NUMBER_OPERATORS)
     profit = models.FloatField(_(u"Profit"), default=0.)
     value_attr = u'profit'
     content_type = u"profit"

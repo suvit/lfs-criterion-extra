@@ -29,6 +29,7 @@ from lfs.criteria.settings import LESS_THAN
 from lfs.criteria.settings import LESS_THAN_EQUAL
 from lfs.criteria.settings import GREATER_THAN
 from lfs.criteria.settings import GREATER_THAN_EQUAL
+from lfs.criteria.settings import NUMBER_OPERATORS
 
 #imports for patching
 import lfs.criteria.utils
@@ -147,6 +148,11 @@ class Criterion(models.Model, BaseCriterion):
 
 
 class NumberCriterion(Criterion):
+
+    operator = models.PositiveIntegerField(_(u"Operator"),
+                                           blank=True, null=True,
+                                           choices=NUMBER_OPERATORS)
+
     class Meta:
         abstract = True
 
