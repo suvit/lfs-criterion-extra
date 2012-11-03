@@ -18,6 +18,12 @@ After instalation of the package you should add
 **lfs_criterion_extra** to INSTALLED_APPS before **lfs** app.
 This is because, this app overwrite lfs templates.
 
+After that you needed to app tables in db.
+
+    python manage.py syncdb
+
+That`s all.
+
 Usage
 -------------------
 
@@ -55,8 +61,12 @@ After patching you may use several new criterions:
 * **ProfitCriterion** (not worked with base lfs, needed prices from supplier)
    checks product profit
 
+You may choose new criterions from criterion`s tab
+of delivery and payment methods.
+
 TODO
-====
-list criterions in sorted order
-move monkey.py to lfs.core (merge or move to lfs 0.8)
-write tests
+------
+
+* list criterions in sorted order
+* move monkey.py to lfs.core (merge or move to lfs 0.8)
+* write tests
