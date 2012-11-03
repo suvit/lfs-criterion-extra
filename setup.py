@@ -32,6 +32,6 @@ setup(
             os.path.dirname(__file__),
             'requirements.txt'
         )
-    ).read().split(),
+    ).read(),
     include_package_data=True,
 )
