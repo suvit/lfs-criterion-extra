@@ -805,4 +805,3 @@ class ProfitCriterion(NumberCriterion):
             profit += (price - d_price)
 
         return self.test_value(profit)
-

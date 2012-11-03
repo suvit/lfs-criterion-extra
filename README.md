@@ -18,7 +18,7 @@ After instalation of the package you should add
 **lfs_criterion_extra** to INSTALLED_APPS before **lfs** app.
 This is because, this app overwrite lfs templates.
 
-After that you needed to app tables in db.
+After that you needed to add tables in db
 
     python manage.py syncdb
 
@@ -35,9 +35,9 @@ After patching you may use several new criterions:
 * **GroupCriterion**
    checks request.user is in saved group(s)
 * **CategoryCriterion**
-   checks product is in saved categories
+   checks product or products in cart are in saved categories
 * **ProductCriterion**
-   checks product is in saved list of products
+   checks product or products in cart are in saved list of products
 * **OrderCompositionCriterion**
    checks that in cart 
 * **DiscountCriterion**
@@ -63,6 +63,28 @@ After patching you may use several new criterions:
 
 You may choose new criterions from criterion`s tab
 of delivery and payment methods.
+
+Added own criterions
+------------------------------
+
+You may inherit **Critetion** or **NumberCriterion**
+
+    from lfs_criterion_extra.models import NumberCriterion
+
+    class FooCriterion(NumberCriterion):
+        foo = models.DecimalField('FOO')
+
+        'may be other model fields'
+
+        value_attr = 'foo'  # from that attribute get value to compare
+        content_type = 'foo'  # internal id of the criterion
+        name = 'Foo'  # displayable value
+
+        def is_valid(self, request, product=None):
+            how_many_foo = product.name.count('foo')
+            return self.test_value(how_many_foo)
+
+that`s all, your criterion is appeared in the criterion list.
 
 TODO
 ------
