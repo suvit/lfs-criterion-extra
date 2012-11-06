@@ -14,11 +14,21 @@ or
 
     pip install git+https://github.com/suvit/lfs-criterion-extra
 
-After instalation of the package you should add
-**lfs_criterion_extra** to INSTALLED_APPS before **lfs** app.
-This is because, this app overwrite lfs templates.
+After installation of the package you should add
+**lfs_criterion_extra** to INSTALLED_APPS upper then **lfs** app.
+This is because, this app templates overwrite lfs templates.
 
-After that you needed to add tables in db
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        ...
+        'lfs_criterion_extra',
+        ...
+        'lfs',
+        'lfs.core',
+        ...
+    )
+
+After that you need to add tables in db
 
     python manage.py syncdb
 
@@ -27,7 +37,7 @@ That`s all.
 Usage
 -------------------
 
-**lfs-criterion-extra** patch lfs criterions modules to support new criterions.
+**lfs-criterion-extra** patches lfs criterions modules to support new criterions.
 After patching you may use several new criterions:
 
 * **OrderCountCriterion**
@@ -72,7 +82,8 @@ You may inherit **Criterion** or **NumberCriterion**
     from lfs_criterion_extra.models import Criterion, NumberCriterion
 
     class FooCriterion(NumberCriterion):
-        foo = models.DecimalField('FOO')
+
+        foo = models.IntegerField("Foo"), default=0)
 
         'may be other model fields'
 
