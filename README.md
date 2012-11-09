@@ -72,7 +72,7 @@ After patching you may use several new criterions:
    checks product profit
 
 You may choose new criterions from criterion`s tab
-of delivery and payment methods.
+of delivery method, payment methods and discounts.
 
 Added own criterions
 ------------------------------
