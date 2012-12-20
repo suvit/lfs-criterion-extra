@@ -532,7 +532,8 @@ class ManufacturerCriterion(Criterion):
         """Returns True if the criterion is valid.
         """
         if product:
-            result = product.manufacturer in self.manufacturers.all()
+            mnf = product.get_manufacturer()
+            result = self.manufacturers.filter(id=mnf.id).exists()
         else:
             cart = get_cart(request)
             if cart is None or not cart.items().exists():
@@ -540,9 +541,9 @@ class ManufacturerCriterion(Criterion):
 
             manufacturers = set()
             for item in cart.items():
-                manufacturers.add(item.product.manufacturer)
+                manufacturers.add(item.product.get_manufacturer().id)
 
-            result = bool(manufacturers.intersection(self.manufacturers.all()))
+            result = self.manufacturers.filter(id__in=manufacturers).exists()
 
         if self.operator == IS:
             return result
