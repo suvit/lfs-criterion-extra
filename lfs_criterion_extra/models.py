@@ -533,7 +533,7 @@ class ManufacturerCriterion(Criterion):
         """
         if product:
             mnf = product.get_manufacturer()
-            result = self.manufacturers.filter(id=mnf.id).exists()
+            result = mnf in self.manufacturers.all()
         else:
             cart = get_cart(request)
             if cart is None or not cart.items().exists():
@@ -543,7 +543,7 @@ class ManufacturerCriterion(Criterion):
             for item in cart.items():
                 manufacturers.add(item.product.get_manufacturer().id)
 
-            result = self.manufacturers.filter(id__in=manufacturers).exists()
+            result = bool(manufacturers.intersection(self.manufacturers.all()))
 
         if self.operator == IS:
             return result
