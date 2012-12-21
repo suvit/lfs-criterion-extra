@@ -541,7 +541,7 @@ class ManufacturerCriterion(Criterion):
 
             manufacturers = set()
             for item in cart.items():
-                manufacturers.add(item.product.get_manufacturer().id)
+                manufacturers.add(item.product.get_manufacturer())
 
             result = bool(manufacturers.intersection(self.manufacturers.all()))
 
